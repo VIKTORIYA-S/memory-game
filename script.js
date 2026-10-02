@@ -71,6 +71,12 @@ function renderCards(container, cards, movesElement, pairsElement) {
         if (firstCard.dataset.image === cardImage.dataset.image) {
           pairs++;
           pairsElement.textContent = `Пары: ${pairs} из 8`;
+        } else {
+          const previousCard = firstCard;
+          setTimeout(() => {
+            previousCard.classList.remove("open");
+            cardImage.classList.remove("open");
+          }, 1000);
         }
           firstCard = null;
       }
