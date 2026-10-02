@@ -74,6 +74,10 @@ function renderCards(container, cards, movesElement, pairsElement) {
         if (firstCard.dataset.image === cardImage.dataset.image) {
           pairs++;
           pairsElement.textContent = `Пары: ${pairs} из 8`;
+
+          if (pairs === 8) {
+            console.log("Победа! Ходов:", moves);
+          }
         } else {
           const previousCard = firstCard;
           isLocked = true;
