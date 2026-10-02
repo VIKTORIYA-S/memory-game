@@ -2,6 +2,7 @@ let firstCard = null;
 let moves = 0;
 let pairs = 0;
 let isLocked = false;
+let hideTimer = null;
 
 function createElement(tag, className, text) {
     const element = document.createElement(tag);
@@ -46,11 +47,12 @@ function createLayout() {
   header.append(btnNewGame, btnTable);
   counter.append(movesElement, pairsElement);
   document.body.append(header, counter, field);
-  return { field, movesElement, pairsElement };
+  return { field, movesElement, pairsElement, btnNewGame, btnTable };
 }
 
-const { field, movesElement, pairsElement } = createLayout();
-renderCards(field, shuffle(createDeck()), movesElement, pairsElement);
+const { field, movesElement, pairsElement, btnNewGame, btnTable } = createLayout();
+// renderCards(field, shuffle(createDeck()), movesElement, pairsElement);
+startGame(field, movesElement, pairsElement);
 
 function renderCards(container, cards, movesElement, pairsElement) {
   cards.forEach((card) => {
@@ -81,7 +83,7 @@ function renderCards(container, cards, movesElement, pairsElement) {
         } else {
           const previousCard = firstCard;
           isLocked = true;
-          setTimeout(() => {
+          hideTimer = setTimeout(() => {
             previousCard.classList.remove("open");
             cardImage.classList.remove("open");
             isLocked = false;
@@ -93,3 +95,18 @@ function renderCards(container, cards, movesElement, pairsElement) {
   });
 }
 
+function startGame(field, movesElement, pairsElement) {
+  clearTimeout(hideTimer);
+  firstCard = null;
+  moves = 0;
+  pairs = 0;
+  isLocked = false;
+  movesElement.textContent = 'Ходы: 0';
+  pairsElement.textContent = 'Пары: 0 из 8';
+  field.replaceChildren();
+  renderCards(field, shuffle(createDeck()), movesElement, pairsElement);
+}
+
+btnNewGame.addEventListener("click", () => {
+  startGame(field, movesElement, pairsElement);
+});
