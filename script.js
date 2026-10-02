@@ -1,6 +1,7 @@
 let firstCard = null;
 let moves = 0;
 let pairs = 0;
+let isLocked = false;
 
 function createElement(tag, className, text) {
     const element = document.createElement(tag);
@@ -61,6 +62,8 @@ function renderCards(container, cards, movesElement, pairsElement) {
     cardImage.append(img);
 
     cardImage.addEventListener("click", () => {
+      if (isLocked === true || cardImage.classList.contains("open")) return;
+
       cardImage.classList.add("open");
 
       if (firstCard === null) {
@@ -73,12 +76,14 @@ function renderCards(container, cards, movesElement, pairsElement) {
           pairsElement.textContent = `Пары: ${pairs} из 8`;
         } else {
           const previousCard = firstCard;
+          isLocked = true;
           setTimeout(() => {
             previousCard.classList.remove("open");
             cardImage.classList.remove("open");
+            isLocked = false;
           }, 1000);
         }
-          firstCard = null;
+        firstCard = null;
       }
     });
   });
