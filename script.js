@@ -53,7 +53,6 @@ function createLayout() {
 }
 
 const { field, movesElement, pairsElement, btnNewGame, btnTable } = createLayout();
-// renderCards(field, shuffle(createDeck()), movesElement, pairsElement);
 startGame(field, movesElement, pairsElement);
 
 function renderCards(container, cards, movesElement, pairsElement) {
@@ -117,10 +116,10 @@ btnNewGame.addEventListener("click", () => {
 function openModal(content) {
   const overlay = createElement("div", "modal-overlay", "");
   const modal = createElement("div", "modal", "");
-  // const closeButton = createElement("button", "modal-close", "X");
-  modal.append(content);
+  const closeButton = createElement("button", "modal-close", "Закрыть");
+  modal.append(content, closeButton);
   overlay.append(modal);
-  // modal.append(closeButton);
+  closeButton.addEventListener("click", closeModal);
   document.body.append(overlay);
 
   overlay.addEventListener("click", (event) => {
@@ -128,6 +127,7 @@ function openModal(content) {
       closeModal();
     }
   });
+  document.addEventListener("keydown", handleEscape);
 }
 
 btnTable.addEventListener("click", () => {
@@ -140,6 +140,12 @@ btnTable.addEventListener("click", () => {
 function closeModal() {
   const overlay = document.querySelector(".modal-overlay");
   if (overlay) overlay.remove();
+  document.removeEventListener("keydown", handleEscape);
 }
 
-// document.querySelector(".modal-close").addEventListener("click", closeModal);
+function handleEscape(event) {
+  document.addEventListener("keydown", handleEscape);
+  if (event.key === "Escape") {
+    closeModal();
+  }
+}
