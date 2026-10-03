@@ -121,6 +121,7 @@ function openModal(content) {
   overlay.append(modal);
   closeButton.addEventListener("click", closeModal);
   document.body.append(overlay);
+  document.body.style.overflow = "hidden";
 
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) {
@@ -141,6 +142,7 @@ function closeModal() {
   const overlay = document.querySelector(".modal-overlay");
   if (overlay) overlay.remove();
   document.removeEventListener("keydown", handleEscape);
+  document.body.style.overflow = "";
 }
 
 function handleEscape(event) {
