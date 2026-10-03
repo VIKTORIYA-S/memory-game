@@ -79,7 +79,7 @@ function renderCards(container, cards, movesElement, pairsElement) {
           pairsElement.textContent = `Пары: ${pairs} из 8`;
 
           if (pairs === 8) {
-            console.log("Победа! Ходов:", moves);
+            showWinModal(moves);
           }
         } else {
           const previousCard = firstCard;
@@ -150,4 +150,19 @@ function handleEscape(event) {
   if (event.key === "Escape") {
     closeModal();
   }
+}
+
+
+function showWinModal(number) {
+  const modalTitle = createElement("h2", "modal-title", "Победа!");
+  const modalText = createElement("p", "modal-text", `Ходов: ${number}`);
+  const modalButton = createElement("button", "modal-button", "Новая игра");
+  const winContent = createElement("div", "win-content", "");
+  winContent.append(modalTitle, modalText, modalButton);
+  modalButton.addEventListener("click", () => {
+    closeModal();
+    startGame(field, movesElement, pairsElement);
+  });
+
+  openModal(winContent);
 }
