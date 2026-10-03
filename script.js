@@ -6,7 +6,9 @@ let hideTimer = null;
 
 function createElement(tag, className, text) {
     const element = document.createElement(tag);
-    element.classList.add(className);
+    if (className) {
+      element.classList.add(className);
+    }
     element.textContent = text;
     return element;
 }
@@ -110,3 +112,34 @@ function startGame(field, movesElement, pairsElement) {
 btnNewGame.addEventListener("click", () => {
   startGame(field, movesElement, pairsElement);
 });
+
+
+function openModal(content) {
+  const overlay = createElement("div", "modal-overlay", "");
+  const modal = createElement("div", "modal", "");
+  // const closeButton = createElement("button", "modal-close", "X");
+  modal.append(content);
+  overlay.append(modal);
+  // modal.append(closeButton);
+  document.body.append(overlay);
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      closeModal();
+    }
+  });
+}
+
+btnTable.addEventListener("click", () => {
+  const content = createElement("div", "modal-content", "Тест");
+  const table = createElement("table", "leaderboard-table", "");
+
+  openModal(content);
+});
+
+function closeModal() {
+  const overlay = document.querySelector(".modal-overlay");
+  if (overlay) overlay.remove();
+}
+
+// document.querySelector(".modal-close").addEventListener("click", closeModal);
