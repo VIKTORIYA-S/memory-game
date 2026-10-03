@@ -186,6 +186,8 @@ function getResults() {
 
 function saveResult(moves) {
   const list = getResults();
-  list.push({ moves, date: Date.now()});
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  list.push({ moves, date: Date.now() });
+  list.sort((a, b) => a.moves - b.moves || a.date - b.date);
+  const topResults = list.splice(0, 10);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(topResults));
 }
