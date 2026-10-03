@@ -24,6 +24,8 @@ const CARD_IMAGES = [
   "image8.png",
 ];
 
+const STORAGE_KEY = "memory-results";
+
 function createDeck() {
   const cards = [...CARD_IMAGES, ...CARD_IMAGES];
   return cards;
@@ -79,6 +81,7 @@ function renderCards(container, cards, movesElement, pairsElement) {
           pairsElement.textContent = `Пары: ${pairs} из 8`;
 
           if (pairs === 8) {
+            saveResult(moves);
             showWinModal(moves);
           }
         } else {
@@ -165,4 +168,24 @@ function showWinModal(number) {
   });
 
   openModal(winContent);
+}
+
+
+function getResults() {
+  try {
+    const results = localStorage.getItem(STORAGE_KEY);
+    if (!results) {
+      return [];
+    }
+    return JSON.parse(results);
+  } catch {
+    return [];
+  }
+}
+
+
+function saveResult(moves) {
+  const list = getResults();
+  list.push({ moves, date: Date.now()});
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }
