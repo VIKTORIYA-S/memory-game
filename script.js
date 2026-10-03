@@ -191,3 +191,12 @@ function saveResult(moves) {
   const topResults = list.splice(0, 10);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(topResults));
 }
+
+function formatDate(date) {
+  const nowDate = new Date(date);
+  const day = String(nowDate.getDate()).padStart(2, '0');
+  const month = String(nowDate.getMonth() + 1).padStart(2, '0');
+  const year = nowDate.getFullYear();
+  return `${day}.${month}.${year}`;
+}
+
