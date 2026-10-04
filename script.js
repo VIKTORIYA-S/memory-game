@@ -135,10 +135,7 @@ function openModal(content) {
 }
 
 btnTable.addEventListener("click", () => {
-  const content = createElement("div", "modal-content", "Тест");
-  const table = createElement("table", "leaderboard-table", "");
-
-  openModal(content);
+showLeaderboard();
 });
 
 function closeModal() {
@@ -200,3 +197,14 @@ function formatDate(date) {
   return `${day}.${month}.${year}`;
 }
 
+function showLeaderboard() {
+  const results = getResults();
+  const leaderboardContent = createElement("div", "leaderboard-content", "");
+  const leaderboardTitle = createElement("h2", "leaderboard-title", "Таблица лидеров");
+  leaderboardContent.append(leaderboardTitle);
+  if (results.length === 0) {
+    const leaderboardText = createElement("p", "leaderboard-text", "Пока нет результатов");
+    leaderboardContent.append(leaderboardText);
+  }
+  openModal(leaderboardContent);
+}
