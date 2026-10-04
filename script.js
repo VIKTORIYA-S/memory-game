@@ -205,6 +205,23 @@ function showLeaderboard() {
   if (results.length === 0) {
     const leaderboardText = createElement("p", "leaderboard-text", "Пока нет результатов");
     leaderboardContent.append(leaderboardText);
+  } else {
+    const table = createElement("table", "leaderboard-table", "");
+    const thead = createElement("tr", "", "");
+    const thRank = createElement("th", "", "Место");
+    const thMoves = createElement("th", "", "Ходы");
+    const thDate = createElement("th", "", "Дата");
+    thead.append(thRank, thMoves, thDate);
+    table.append(thead);
+    results.forEach((result, index) => {
+      const tr = createElement("tr", "", "");
+      const tdRank = createElement("td", "", `${index + 1}`);
+      const tdMoves = createElement("td", "", `${result.moves}`);
+      const tdDate = createElement("td", "", formatDate(result.date));
+      tr.append(tdRank, tdMoves, tdDate);
+      table.append(tr);
+    });
+    leaderboardContent.append(table);
   }
   openModal(leaderboardContent);
 }
