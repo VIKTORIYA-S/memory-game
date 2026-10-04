@@ -126,6 +126,12 @@ function openModal(content) {
   document.body.append(overlay);
   document.body.style.overflow = "hidden";
 
+  for (const element of document.body.children) {
+    if (element !== overlay) {
+      element.inert = true;
+    }
+   }
+
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) {
       closeModal();
@@ -143,6 +149,10 @@ function closeModal() {
   if (overlay) overlay.remove();
   document.removeEventListener("keydown", handleEscape);
   document.body.style.overflow = "";
+
+  for (const element of document.body.children) {
+    element.inert = false;
+   }
 }
 
 function handleEscape(event) {
