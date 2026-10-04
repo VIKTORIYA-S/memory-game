@@ -40,6 +40,7 @@ function shuffle(arr) {
 }
 
 function createLayout() {
+  const wrapper = createElement("div", "wrapper", "");
   const header = createElement("header", "header", "");
   const btnNewGame = createElement("button", "btn-new-game", "Новая игра");
   const btnTable = createElement("button", "btn-table", "Таблица лидеров");
@@ -50,7 +51,8 @@ function createLayout() {
 
   header.append(btnNewGame, btnTable);
   counter.append(movesElement, pairsElement);
-  document.body.append(header, counter, field);
+  wrapper.append(header, counter, field);
+  document.body.append(wrapper);
   return { field, movesElement, pairsElement, btnNewGame, btnTable };
 }
 
