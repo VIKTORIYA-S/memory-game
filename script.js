@@ -66,6 +66,7 @@ function renderCards(container, cards, movesElement, pairsElement) {
     container.append(cardImage);
     const img = createElement("img", "card-image", "");
     img.src = `images/${card}`;
+    img.alt = "Карточка";
     cardImage.append(img);
 
     cardImage.addEventListener("click", () => {
